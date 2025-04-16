@@ -34,7 +34,12 @@ client.on('messageCreate', async (message) => {
   }
 
   const userId = message.author.id;
-  const pingMessage = userId === '900551027730837544' ? customMessages.ping.yourId : customMessages.ping.others;
+  // Debug ID comparison
+  console.log(`Comparing userId "${userId}" (type: ${typeof userId}) with YOUR_DISCORD_ID "${YOUR_DISCORD_ID}" (type: ${typeof YOUR_DISCORD_ID})`);
+  const isYourId = userId === YOUR_DISCORD_ID;
+  console.log(`ID match result: ${isYourId}`);
+  const pingMessage = isYourId ? customMessages.ping.yourId : customMessages.ping.others;
+  console.log(`Selected ping message: "${pingMessage}"`);
 
   // !ping command
   if (message.content.toLowerCase() === '!ping') {
