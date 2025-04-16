@@ -15,13 +15,38 @@ client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag} at ${new Date().toISOString()}`);
 });
 
+// Custom message for your ID only
+const YOUR_DISCORD_ID = 'YOUR_DISCORD_ID'; // Replace with your 18-digit ID
+const customMessages = {
+  ping: {
+    yourId: 'Commander, ping’s locked on target! 🎮',
+    others: 'Pong, gamer! Ready for action? 🕹️',
+  },
+};
+
 // Consolidated messageCreate listener
 client.on('messageCreate', async (message) => {
-  if (message.author.bot || !message.guild) return;
+  console.log(`Message received: "${message.content}" from ${message.author.id} in channel ${message.channel.id}`);
+
+  if (message.author.bot || !message.guild) {
+    console.log('Ignoring bot or non-guild message');
+    return;
+  }
+
+  const userId = message.author.id;
+  const pingMessage = userId === 900551027730837544 ? customMessages.ping.yourId : customMessages.ping.others;
 
   // !ping command
-  if (message.content === '!ping') {
-    return message.reply('Pong!');
+  if (message.content.toLowerCase() === '!ping') {
+    console.log(`Processing !ping for user ${userId}`);
+    try {
+      await message.reply(pingMessage);
+      console.log('Ping reply sent successfully');
+    } catch (error) {
+      console.error('Error sending ping reply:', error.message);
+      await message.reply('Error: Can’t ping right now. Check my permissions!').catch(() => {});
+    }
+    return;
   }
 
   // !ai command
