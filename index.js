@@ -34,7 +34,7 @@ client.on('messageCreate', async (message) => {
   }
 
   const userId = message.author.id;
-  const pingMessage = userId === 900551027730837544 ? customMessages.ping.yourId : customMessages.ping.others;
+  const pingMessage = userId === '900551027730837544' ? customMessages.ping.yourId : customMessages.ping.others;
 
   // !ping command
   if (message.content.toLowerCase() === '!ping') {
